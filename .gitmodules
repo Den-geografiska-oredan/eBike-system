@@ -10,3 +10,6 @@
 [submodule "eBike-controlsys-python"]
 	path = eBike-controlsys-python
 	url = https://github.com/DMoest/eBike-controlsys-python.git
+[submodule "eBike-REST-API"]
+	path = eBike-REST-API
+	url = https://github.com/DMoest/eBike-REST-API.git
