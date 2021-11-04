@@ -1,3 +1,6 @@
 [submodule "eBike-backend-laravel"]
 	path = eBike-backend-laravel
 	url = https://github.com/DMoest/eBike-backend-laravel.git
+[submodule "eBike-frontend-react"]
+	path = eBike-frontend-react
+	url = https://github.com/DMoest/eBike-frontend-react.git
