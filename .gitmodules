@@ -7,3 +7,6 @@
 [submodule "eBike-webbapp-react"]
 	path = eBike-webbapp-react
 	url = https://github.com/DMoest/eBike-webbapp-react.git
+[submodule "eBike-controlsys-python"]
+	path = eBike-controlsys-python
+	url = https://github.com/DMoest/eBike-controlsys-python.git
