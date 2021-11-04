@@ -4,3 +4,6 @@
 [submodule "eBike-frontend-react"]
 	path = eBike-frontend-react
 	url = https://github.com/DMoest/eBike-frontend-react.git
+[submodule "eBike-webbapp-react"]
+	path = eBike-webbapp-react
+	url = https://github.com/DMoest/eBike-webbapp-react.git
