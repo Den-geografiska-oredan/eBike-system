@@ -1,0 +1,22 @@
+version: "3"
+networks:
+    ebike:
+services:
+    ebike_backend:
+        build: ./eBike-backend-laravel/backend
+        env_file:
+          - .env
+        image: ebike/backend:latest
+        container_name: "backend"
+        ports:
+            - "8000:8000"
+        networks:
+            ebike:
+        restart:
+            "always"
+    ebike_simulator:
+        build: ./eBike-controlsys-python
+        image: ebike/bike_simulator:latest
+        container_name: "bike_simulator"
+        networks:
+            ebike:
