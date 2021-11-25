@@ -20,3 +20,13 @@ services:
         container_name: "bike_simulator"
         networks:
             ebike:
+    ebike_frontend:
+        build: ./eBike-frontend-react
+        env_file:
+          - .env
+        image: ebike/frontend:latest
+        container_name: "bike_frontend"
+        ports:
+            - "3000:3000"
+        networks:
+            ebike:
