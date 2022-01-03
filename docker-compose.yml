@@ -8,18 +8,32 @@ services:
         build:
             context: ./eBike-backend-laravel
             dockerfile: nginx.dockerfile
-        ports:
-            - "80:80"
         container_name: "nginx"
+        ports:
+            - "1337:1337"
         volumes:
             - ./eBike-backend-laravel/backend:/var/www/html
-        restart:
-            "always"
         networks:
-            ebike:
+            - ebike
+        restart: "always"
         depends_on:
+            - mysql
             - php
-            - ebike_backend
+
+    mysql:
+        image: mysql:8.0
+        container_name: "mysql"
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: laravel
+            MYSQL_USER: laravel
+            MYSQL_PASSWORD: secret
+            MYSQL_ROOT_PASSWORD: secret
+        networks:
+            - ebike
+        volumes:
+            - ./eBike-backend-laravel/mysql:/var/lib/mysql
 
     php:
         build:
@@ -27,9 +41,11 @@ services:
             dockerfile: php.dockerfile
         container_name: "php"
         networks:
-            ebike:
+            - ebike
         volumes:
             - ./eBike-backend-laravel/backend:/var/www/html
+        depends_on:
+            - mysql
 
     composer:
         build:
@@ -37,7 +53,7 @@ services:
             dockerfile: composer.dockerfile
         container_name: "composer"
         networks:
-            ebike:
+            - ebike
         volumes:
             - ./eBike-backend-laravel/backend:/var/www/html
         working_dir: /var/www/html
@@ -46,7 +62,7 @@ services:
         image: node:current-alpine
         container_name: "npm"
         networks:
-            ebike:
+            - ebike
         volumes:
             - ./eBike-backend-laravel/backend:/var/www/html
         entrypoint: [ "npm" ]
@@ -58,34 +74,34 @@ services:
             dockerfile: php.dockerfile
         container_name: "artisan"
         networks:
-            ebike:
+            - ebike
         volumes:
             - ./eBike-backend-laravel/backend:/var/www/html
         working_dir: /var/www/html
         entrypoint: [ "php", "/var/www/html/artisan" ]
 
-    ebike_seed:
-        build:
-            context: eBike-backend-laravel
-            dockerfile: seed.dockerfile
-        env_file:
-            - .env
-        image: ebike/seed:latest
-        container_name: "seed"
+#    ebike_seed:
+#        build:
+#            context: ./eBike-backend-laravel
+#            dockerfile: seed.dockerfile
+#        container_name: "seed"
+#        env_file:
+#            - .env
+#        image: ebike/seed:latest
 
     ebike_backend:
         build:
             context: ./eBike-backend-laravel
             dockerfile: backend.dockerfile
-        env_file:
-          - .env
+#        env_file:
+#          - ./eBike-backend-laravel/backend/.env
         container_name: "ebike_backend"
         ports:
             - "8000:8000"
-        restart:
-            "always"
         networks:
-            ebike:
+            - ebike
+        volumes:
+            - ./eBike-backend-laravel/backend:/var/www/html
 
     ebike_simulator:
         build:
@@ -94,7 +110,7 @@ services:
         image: ebike/bike_simulator:latest
         container_name: "bike_simulator"
         networks:
-            ebike:
+            - ebike
         depends_on:
             - ebike_backend
 
@@ -109,7 +125,7 @@ services:
         ports:
             - "3000:3000"
         networks:
-            ebike:
+            - ebike
         restart:
             "always"
         depends_on:
