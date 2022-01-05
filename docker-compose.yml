@@ -80,21 +80,10 @@ services:
         working_dir: /var/www/html
         entrypoint: [ "php", "/var/www/html/artisan" ]
 
-#    ebike_seed:
-#        build:
-#            context: ./eBike-backend-laravel
-#            dockerfile: seed.dockerfile
-#        container_name: "seed"
-#        env_file:
-#            - .env
-#        image: ebike/seed:latest
-
     ebike_backend:
         build:
             context: ./eBike-backend-laravel
             dockerfile: backend.dockerfile
-#        env_file:
-#          - ./eBike-backend-laravel/backend/.env
         container_name: "ebike_backend"
         ports:
             - "8000:8000"
@@ -117,7 +106,7 @@ services:
     ebike_frontend:
         build:
             context: ./eBike-frontend-react
-            dockerfile: Dockerfile
+            dockerfile: frontend.dockerfile
         env_file:
             - .env
         image: ebike/frontend:latest
