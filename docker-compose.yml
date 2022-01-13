@@ -100,8 +100,8 @@ services:
         container_name: "bike_simulator"
         networks:
             - ebike
-        depends_on:
-            - ebike_backend
+#        depends_on:
+#            - ebike_backend
 
     ebike_frontend:
         build:
@@ -117,5 +117,5 @@ services:
             - ebike
         restart:
             "always"
-        depends_on:
-            - ebike_backend
+#        depends_on:
+#            - ebike_backend
